@@ -181,6 +181,9 @@ public class ConversationViewController: AAConversationContentController, UIDocu
         avatarView.addGestureRecognizer(avatarTapGesture)
         
         let barItem = UIBarButtonItem(customView: avatarView)
+        barItem.accessibilityLabel = "User Details"
+        barItem.isAccessibilityElement = true
+        barItem.accessibilityTraits = UIAccessibilityTraitButton
         self.navigationItem.rightBarButtonItem = barItem
     }
     
