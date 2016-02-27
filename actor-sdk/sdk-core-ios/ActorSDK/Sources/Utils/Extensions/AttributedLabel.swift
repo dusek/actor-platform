@@ -73,7 +73,7 @@ public class AttributedLabel: UIView {
     }
     /// default is nil.
     public var attributedText: NSAttributedString? {
-        didSet { setNeedsDisplay() }
+        didSet { setNeedsDisplay(); accessibilityLabel = text }
     }
     /// default is nil.
     public var text: String? {
@@ -101,6 +101,8 @@ public class AttributedLabel: UIView {
         
         opaque = false
         contentMode = .Redraw
+        isAccessibilityElement = true
+        accessibilityTraits = UIAccessibilityTraitStaticText
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -108,6 +110,8 @@ public class AttributedLabel: UIView {
         
         opaque = false
         contentMode = .Redraw
+        isAccessibilityElement = true
+        accessibilityTraits = UIAccessibilityTraitStaticText
     }
     
     public override func setNeedsDisplay() {

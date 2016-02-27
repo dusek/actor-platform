@@ -152,6 +152,7 @@ public class AABubbleCell: UICollectionViewCell {
         dateText.textColor = appStyle.chatDateTextColor
         dateText.contentMode = UIViewContentMode.Center
         dateText.textAlignment = NSTextAlignment.Center
+        dateText.accessibilityTraits |= UIAccessibilityTraitHeader
         
         newMessage.font = UIFont.mediumSystemFontOfSize(14)
         newMessage.textColor = appStyle.chatUnreadTextColor

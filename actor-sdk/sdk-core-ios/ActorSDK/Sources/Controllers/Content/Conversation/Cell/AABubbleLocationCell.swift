@@ -29,6 +29,7 @@ public class AABubbleLocationCell: AABubbleCell {
         timeLabel.textColor = appStyle.chatMediaDateColor
         
         statusView.contentMode = UIViewContentMode.Center
+        statusView.isAccessibilityElement = true
 
         pin.image = UIImage.bundled("LocationPin")
         
@@ -43,6 +44,10 @@ public class AABubbleLocationCell: AABubbleCell {
 
         map.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "mapDidTap"))
         map.userInteractionEnabled = true
+        map.isAccessibilityElement = true
+        map.accessibilityTraits |= UIAccessibilityTraitButton
+        map.accessibilityLabel = AALocalized("Location")
+        map.accessibilityHint = AALocalized("Opens location in Maps.")
     }
 
     public required init(coder aDecoder: NSCoder) {
@@ -89,26 +94,32 @@ public class AABubbleLocationCell: AABubbleCell {
             switch(message.messageState.ordinal()) {
             case ACMessageState.PENDING().ordinal():
                 self.statusView.image = appStyle.chatIconClock;
+                self.statusView.accessibilityLabel = AALocalized("sending")
                 self.statusView.tintColor = appStyle.chatStatusMediaSending
                 break;
             case ACMessageState.SENT().ordinal():
                 self.statusView.image = appStyle.chatIconCheck1;
+                self.statusView.accessibilityLabel = AALocalized("sent")
                 self.statusView.tintColor = appStyle.chatStatusMediaSent
                 break;
             case ACMessageState.RECEIVED().ordinal():
                 self.statusView.image = appStyle.chatIconCheck2;
+                self.statusView.accessibilityLabel = AALocalized("received")
                 self.statusView.tintColor = appStyle.chatStatusMediaReceived
                 break;
             case ACMessageState.READ().ordinal():
                 self.statusView.image = appStyle.chatIconCheck2;
+                self.statusView.accessibilityLabel = AALocalized("read")
                 self.statusView.tintColor = appStyle.chatStatusMediaRead
                 break;
             case ACMessageState.ERROR().ordinal():
                 self.statusView.image = appStyle.chatIconError;
+                self.statusView.accessibilityLabel = AALocalized("error")
                 self.statusView.tintColor = appStyle.chatStatusMediaError
                 break
             default:
                 self.statusView.image = appStyle.chatIconClock;
+                self.statusView.accessibilityLabel = AALocalized("sending")
                 self.statusView.tintColor = appStyle.chatStatusMediaSending
                 break;
             }

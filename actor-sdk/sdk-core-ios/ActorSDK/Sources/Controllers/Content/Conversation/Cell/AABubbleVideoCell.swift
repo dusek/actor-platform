@@ -35,6 +35,7 @@ public class AABubbleVideoCell: AABubbleBaseFileCell {
         timeLabel.textColor = appStyle.chatMediaDateColor
         
         statusView.contentMode = UIViewContentMode.Center
+        statusView.isAccessibilityElement = true
         
         contentView.addSubview(preview)
         contentView.addSubview(progress)
@@ -46,9 +47,15 @@ public class AABubbleVideoCell: AABubbleBaseFileCell {
         
         preview.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "mediaDidTap"))
         preview.userInteractionEnabled = true
+        preview.isAccessibilityElement = true
+        preview.accessibilityTraits |= UIAccessibilityTraitButton
+        preview.accessibilityLabel = AALocalized("Video")
+        preview.accessibilityHint = AALocalized("Starts playing video.")
         
         playView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "mediaDidTap"))
         playView.userInteractionEnabled = true
+        // To avoid confusion, let's have only one element through which AT users can open the video
+        preview.isAccessibilityElement = false
         
         contentInsets = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
     }
@@ -102,26 +109,32 @@ public class AABubbleVideoCell: AABubbleBaseFileCell {
             switch(message.messageState.ordinal()) {
             case ACMessageState.PENDING().ordinal():
                 self.statusView.image = appStyle.chatIconClock;
+                self.statusView.accessibilityLabel = AALocalized("sending")
                 self.statusView.tintColor = appStyle.chatStatusMediaSending
                 break;
             case ACMessageState.SENT().ordinal():
                 self.statusView.image = appStyle.chatIconCheck1;
+                self.statusView.accessibilityLabel = AALocalized("sent")
                 self.statusView.tintColor = appStyle.chatStatusMediaSent
                 break;
             case ACMessageState.RECEIVED().ordinal():
                 self.statusView.image = appStyle.chatIconCheck2;
+                self.statusView.accessibilityLabel = AALocalized("received")
                 self.statusView.tintColor = appStyle.chatStatusMediaReceived
                 break;
             case ACMessageState.READ().ordinal():
                 self.statusView.image = appStyle.chatIconCheck2;
+                self.statusView.accessibilityLabel = AALocalized("read")
                 self.statusView.tintColor = appStyle.chatStatusMediaRead
                 break;
             case ACMessageState.ERROR().ordinal():
                 self.statusView.image = appStyle.chatIconError;
+                self.statusView.accessibilityLabel = AALocalized("error")
                 self.statusView.tintColor = appStyle.chatStatusMediaError
                 break
             default:
                 self.statusView.image = appStyle.chatIconClock;
+                self.statusView.accessibilityLabel = AALocalized("sending")
                 self.statusView.tintColor = appStyle.chatStatusMediaSending
                 break;
             }
